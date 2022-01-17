@@ -1,0 +1,46 @@
+<form [formGroup]="registerForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Rejestracja</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="email" matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+          <mat-error *ngIf="registerForm.controls['email'].hasError('required')">
+            Email jest <strong>obowiązkowy</strong>
+          </mat-error>
+          <mat-error *ngIf="registerForm.controls['email'].hasError('email')">
+            Nieprawidłowy format
+          </mat-error>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="password" matInput placeholder="Hasło" formControlName="password">
+          </mat-form-field>
+          <mat-error *ngIf="registerForm.controls['password'].hasError('required')">
+            Hasło jest <strong>obowiązkowe</strong>
+          </mat-error>
+          <mat-hint>Hasło musi się składać z 6 do 20 znaków</mat-hint>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Imię" formControlName="firstName">
+            <mat-error *ngIf="registerForm.controls['firstName'].hasError('required')">
+              Imię jest <strong>obowiązkowe</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

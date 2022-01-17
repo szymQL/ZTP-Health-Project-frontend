@@ -1,0 +1,49 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Twoja tablica</h1>
+  <mat-grid-list cols="2" rowHeight="350px">
+    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{card.title}}
+            <button mat-icon-button class="more-button" aria-label="Toggle menu">
+            </button>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-subtitle >{{card.subtitle}}</mat-card-subtitle>
+        <mat-card-content class="dashboard-card-content">
+          <div style="display: flex" *ngIf="card.title == 'Twoje rezultaty'; else elseBlock">
+            <table mat-table [dataSource]="dataSource">
+              <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{column.header}}
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  {{column.cell(row)}}
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <form title="Dodaj pomiar">
+              <mat-form-field>
+                <mat-label>Waga</mat-label>
+                <input matInput type="number" min="0" max="1000">
+                <span matSuffix>kg</span>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Wzrost</mat-label>
+                <input matInput type="number" min="0" max="300">
+                <span matSuffix>cm</span>
+              </mat-form-field>
+              <div>
+                <button mat-button color="primary" type="submit">Dodaj pomiar</button>
+              </div>
+            </form>
+          </div>
+          <ng-template #elseBlock><div>{{card.content}}</div></ng-template>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

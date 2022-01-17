@@ -1,0 +1,29 @@
+<form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Logowanie</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="email" matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+          <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+            Email jest <strong>obowiązkowy</strong>
+          </mat-error>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="password" matInput placeholder="Hasło" formControlName="password">
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Zaloguj</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
