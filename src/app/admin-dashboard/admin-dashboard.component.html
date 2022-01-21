@@ -3,11 +3,11 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Witaj!</mat-toolbar>
+    <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="/dashboard/wall">Twoja Tablica</a>
-      <a mat-list-item href="/dashboard/exercises">Ćwiczenia</a>
-      <a mat-list-item href="/dashboard/recipes">Przepisy</a>
+      <a mat-list-item href="/admin/users">Użytkownicy</a>
+      <a mat-list-item href="/admin/exercises">Ćwiczenia</a>
+      <a mat-list-item href="/admin/recipes">Przepisy</a>
       <a mat-list-item (click)="service.logoutUser()">Wyloguj się</a>
     </mat-nav-list>
   </mat-sidenav>
@@ -21,7 +21,7 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Zdrowa KanAPPka</span>
+      <span>ZdrowaKanAPPka</span>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

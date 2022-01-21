@@ -1,0 +1,77 @@
+<div>
+  <h1 class="mat-subheader">Dodaj ćwiczenie</h1>
+  <form [formGroup]="measurementForm" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field style="width: 30%; margin-left: 8px" appearance="fill">
+        <mat-label>Nazwa</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field style="width: 15%; margin-left: 5%" appearance="fill">
+        <mat-label>Typ</mat-label>
+        <mat-select formControlName="exerciseType">
+          <mat-option value="WLASNY_CIEZAR">WLASNY_CIEZAR</mat-option>
+          <mat-option value="GUMA">GUMA</mat-option>
+          <mat-option value="KLATKA">KLATKA</mat-option>
+          <mat-option value="NOGI">NOGI</mat-option>
+          <mat-option value="PLECY">PLECY</mat-option>
+          <mat-option value="BARKI">BARKI</mat-option>
+          <mat-option value="TRICEPS">TRICEPS</mat-option>
+          <mat-option value="BICEPS">BICEPS</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field style="width: 50%; margin-left: 8px" appearance="fill">
+        <mat-label>Opis</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-raised-button [disabled]="isDisabled()" color="primary" style="margin-left: 8px" type="submit">Dodaj Ćwiczenie</button>
+    </div>
+  </form>
+</div>
+<mat-divider style="margin-top: 8px"></mat-divider>
+<div>
+  <h1 class="mat-subheader">Ćwiczenia</h1>
+  <mat-form-field style="left: 1%" appearance="standard">
+    <mat-label>Szukaj</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input>
+  </mat-form-field>
+  <table class="table" mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nazwa </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="exerciseType">
+      <th mat-header-cell *matHeaderCellDef> Typ </th>
+      <td mat-cell *matCellDef="let element"> {{element.exerciseType}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-mini-fab style="right: -70%" (click)="deleteExercise(row.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">Nie znalazłem wyników dla: "{{input.value}}"</td>
+    </tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Wybierz stronę">
+  </mat-paginator>
+</div>

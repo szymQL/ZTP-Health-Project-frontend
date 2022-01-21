@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import {getFormValidationErrors} from "../../utils/get-form-validation-errors";
-import {SignInRequest} from "../../utils/requests";
+import {getFormValidationErrors} from "../../commons/utils/get-form-validation-errors";
+import {SignInRequest} from "../../commons/utils/requests";
 import {LoginService} from "../services/login.service";
 
 @Component({
@@ -11,8 +11,8 @@ import {LoginService} from "../services/login.service";
 })
 export class LoginComponent {
   loginForm = this.fb.group({
-    email: ['aleczek@gmail.com', [Validators.required, Validators.email]],
-    password: ['okonokon', Validators.required],
+    email: ['user@gmail.com', [Validators.required, Validators.email]],
+    password: ['root123', Validators.required],
   });
 
   constructor(private fb: FormBuilder, private service: LoginService) {}

@@ -28,15 +28,25 @@ import {LoginService} from "./navigation/services/login.service";
 import {WallComponent} from './dashboard/wall/wall.component';
 import {ExercisesComponent} from './dashboard/exercises/exercises.component';
 import {TestComponent} from './test/test.component';
-import {ExercisesService} from "./dashboard/services/exercises.service";
+import {ExercisesService} from "./commons/services/exercises.service";
 import {RecipesComponent} from './dashboard/recipes/recipes.component';
-import {RecipesService} from "./dashboard/services/recipes.service";
+import {RecipesService} from "./commons/services/recipes.service";
 import {MatTableModule} from "@angular/material/table";
 import {LocalStorageService} from "./navigation/services/local-storage.service";
-import { LogoutComponent } from './dashboard/logout/logout.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {UserDetailsService} from "./commons/services/user-details.service";
+import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
+import {UsersAdminComponent} from './admin-dashboard/users-admin/users-admin.component';
+import {RecipesAdminComponent} from './admin-dashboard/recipes-admin/recipes-admin.component';
+import {ExercisesAdminComponent} from './admin-dashboard/exercises-admin/exercises-admin.component';
+import {UsersAdminService} from "./commons/services/users-admin.service";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {AuthService} from "./commons/services/auth.service";
+import {AuthGuardService} from "./commons/guards/auth-guard.service";
 
+// @ts-ignore
+// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +59,10 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     ExercisesComponent,
     TestComponent,
     RecipesComponent,
-    LogoutComponent
+    AdminDashboardComponent,
+    UsersAdminComponent,
+    RecipesAdminComponent,
+    ExercisesAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -71,10 +84,11 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     HttpClientModule,
     MatTableModule,
     MatDatepickerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCheckboxModule
   ],
-  providers: [RegistrationService, LoginService, ExercisesService, RecipesService, LocalStorageService, AppRoutingModule],
+  providers: [RegistrationService, LoginService, ExercisesService, RecipesService, UserDetailsService, UsersAdminService, LocalStorageService, AppRoutingModule, AuthService, AuthGuardService],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+// @ts-ignore
+export class AppModule {}

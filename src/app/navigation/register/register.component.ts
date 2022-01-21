@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import {getFormValidationErrors} from "../../utils/get-form-validation-errors";
-import {SignUpRequest} from "../../utils/requests";
+import {getFormValidationErrors} from "../../commons/utils/get-form-validation-errors";
+import {SignUpRequest} from "../../commons/utils/requests";
 import {RegistrationService} from "../services/registration.service";
 
 @Component({

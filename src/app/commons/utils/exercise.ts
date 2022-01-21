@@ -1,5 +1,5 @@
 export interface Exercise {
-  id: number,
+  id?: number,
   name: string,
   exerciseType: string,
   description: string

@@ -1,37 +1,31 @@
-import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import {Observable} from "rxjs";
-import {ExercisesService} from "../services/exercises.service";
-import {RecipesService} from "../services/recipes.service";
+import {Component, OnInit} from '@angular/core';
+import {combineLatest} from "rxjs";
+import {RecipesService} from "../../commons/services/recipes.service";
+import {map} from "rxjs/operators";
+import {Recipe} from "../../commons/utils/recipe";
 
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.css']
 })
-export class RecipesComponent {
+export class RecipesComponent implements OnInit {
 
-  recipesAsTiles: { id: number, title: string, subtitle: string, description: string, cols: number, rows: number }[] = [];
-  recipesAsCards: Observable<{ title: string; subtitle: string; description: string; cols: number; rows: number; }[]>;
+  recipesAsCards: any;
 
-  constructor(private breakpointObserver: BreakpointObserver, private service: RecipesService) {
-    this.service.findAllRecipes().subscribe((recipes) => {
-      for (let recipe of recipes) {
-        this.recipesAsTiles.push({
-          id: recipe.id,
-          title: recipe.name,
-          subtitle: recipe.exerciseType,
-          description: recipe.description,
-          cols: 1,
-          rows: 1
-        })
-      }
-    })
-    this.recipesAsCards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-      map(({matches}) => {
-        return this.recipesAsTiles
+  constructor(private service: RecipesService) {
+  }
+
+  ngOnInit() {
+    this.recipesAsCards = combineLatest([this.service.findAllRecipes()]).pipe(
+      map(([recipes]) => {
+        return recipes.map(this.toCard)
       })
     )
   }
+
+  private toCard(recipe: Recipe) {
+    return {title: recipe.name, description: `Składniki:\n${recipe.ingredients}\nPrzygotowanie:\n${recipe.preparation}`}
+  }
+
 }

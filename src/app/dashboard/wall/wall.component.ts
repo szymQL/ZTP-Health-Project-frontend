@@ -1,83 +1,82 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {map} from 'rxjs/operators';
-import {Breakpoints, BreakpointObserver} from '@angular/cdk/layout';
-
-export interface PeriodicElement {
-  weight: number;
-  height: number;
-  timestamp: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {timestamp: 'data', weight: 1, height: 1.0079},
-  {timestamp: 'data', weight: 1, height: 4.0026},
-  {timestamp: 'data', weight: 1, height: 6.941},
-  {timestamp: 'data', weight: 1, height: 9.0122},
-  {timestamp: 'data', weight: 1, height: 10.811},
-  {timestamp: 'data', weight: 1, height: 12.0107},
-  {timestamp: 'data', weight: 1, height: 14.0067},
-  {timestamp: 'data', weight: 1, height: 15.9994},
-  {timestamp: 'data', weight: 1, height: 18.9984},
-  {timestamp: 'data', weight: 1, height: 20.1797},
-];
-
+import {ExercisesService} from "../../commons/services/exercises.service";
+import {RecipesService} from "../../commons/services/recipes.service";
+import {UserDetailsService} from "../../commons/services/user-details.service";
+import {UserWeights} from "../../commons/utils/user-weights";
+import {FormBuilder} from "@angular/forms";
+import {combineLatest} from "rxjs";
+import {CustomDataSource} from "../../commons/utils/custom-data-source";
 
 @Component({
   selector: 'app-wall',
   templateUrl: './wall.component.html',
   styleUrls: ['./wall.component.css']
 })
-export class WallComponent {
-  /** Based on the screen size, switch from standard to one column per row */
+export class WallComponent implements OnInit {
 
   private resultsCardTitle = 'Twoje rezultaty';
   private exerciseName = 'Ćwiczenie na dziś';
   private recipeName = 'Przepis na dziś';
+  cards: any;
+  weights: UserWeights[] = [];
+  dataSource: any;
 
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({matches}) => {
-      if (matches) {
-        return [
-          {title: this.resultsCardTitle, subtitle: "", cols: 2, rows: 1, content: 'rezultaty'},
-          {title: this.exerciseName, subtitle: "nazwa", cols: 2, rows: 1, content: 'opis'},
-          {title: this.recipeName, subtitle: "nazwa", cols: 2, rows: 1, content: 'opis'},
-        ];
-      }
+  measurementForm = this.fb.group({
+    weight: 0
+  })
 
-      return [
-        {title: this.resultsCardTitle, cols: 1, rows: 2, content: 'rezultaty'},
-        {title: this.exerciseName, subtitle: "nazwa", cols: 1, rows: 1, content: 'opis'},
-        {title: this.recipeName, subtitle: "nazwa", cols: 1, rows: 1, content: 'opis'},
-      ];
+
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private eservice: ExercisesService, private rservice: RecipesService, private uservice: UserDetailsService) {
+
+  }
+
+  ngOnInit() {
+    this.uservice.getUserWeights().subscribe( data => {
+      this.weights = data;
+      this.weights.sort((a, b) => (new Date(a.createDate as string) < new Date(b.createDate as string)) ? 1 : -1)
+      this.dataSource = new CustomDataSource<UserWeights>([...this.weights]);
+      this.cdr.detectChanges()
     })
-  );
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+    this.cards = combineLatest([this.eservice.findExerciseForWall(), this.rservice.findRecipeForWall()]).pipe(
+      map(([exercise, recipe]) => {
+        return [
+          {title: this.resultsCardTitle, cols: 1, rows: 2, name: '', description: '' },
+          {title: this.exerciseName, cols: 1, rows: 2, name: exercise.name, description: exercise.description },
+          {title: this.recipeName, cols: 2, rows: 2, name: recipe.name, description: `Składniki:\n${recipe.ingredients}\nPrzygotowanie:\n${recipe.preparation}` },
+        ];
+      })
+    )
   }
 
   columns = [
     {
       columnDef: 'timestamp',
       header: 'Data',
-      cell: (element: PeriodicElement) => `${element.timestamp}`,
+      cell: (element: UserWeights) => `${new Date(element.createDate as string).toDateString()}`,
     },
     {
       columnDef: 'weight',
       header: 'Waga',
-      cell: (element: PeriodicElement) => `${element.weight}`,
-    },
-    {
-      columnDef: 'height',
-      header: 'Wzrost',
-      cell: (element: PeriodicElement) => `${element.height}`,
-    },
-    {
-      columnDef: 'bmi',
-      header: 'BMI',
-      cell: (element: PeriodicElement) => `${element.weight * element.height}`,
-    },
+      cell: (element: UserWeights) => `${element.weight}kg`,
+    }
   ];
-  dataSource = ELEMENT_DATA;
   displayedColumns = this.columns.map(c => c.columnDef);
 
+  onSubmit() {
+    let weight = this.measurementForm.controls['weight'].value
+    this.uservice.updateWeights(weight).subscribe(
+      success => {
+        this.weights = [{id: 0, weight: weight, createDate: new Date().toISOString()}, ...this.weights]
+        this.dataSource.setData(this.weights)
+        alert(success)},
+    err => {
+        alert(err.error)
+    })
+    this.measurementForm.reset()
+  }
+
 }
+
+

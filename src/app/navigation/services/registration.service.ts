@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import {environment} from "../../../environments/environment";
-import {SignUpRequest} from "../../utils/requests";
+import {SignUpRequest} from "../../commons/utils/requests";
 import {Router} from "@angular/router";
 
 @Injectable()
@@ -17,7 +17,7 @@ export class RegistrationService {
   }
 
   public registerUser(signUpRequest: SignUpRequest) {
-    let url = `${this.serverUrl}/api/auth/signup`
+    let url = `${this.serverUrl}/auth/signup`
     let body = JSON.stringify(signUpRequest)
     let result = this.httpClient.post(url, body, {observe: 'response', headers: this.headers, responseType: 'json'})
     result.subscribe(

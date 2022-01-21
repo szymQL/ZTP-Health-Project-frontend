@@ -21,9 +21,5 @@
 }
 
 .table {
-  width: 50%;
-}
-
-.table-header {
-  text-align: center;
+  width: 100%;
 }
