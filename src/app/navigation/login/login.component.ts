@@ -13,8 +13,8 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent {
   loginForm = this.fb.group({
-    email: ['user@gmail.com', [Validators.required, Validators.email]],
-    password: ['root123', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
   });
 
   constructor(private fb: FormBuilder, private service: LoginService, private lservice: LocalStorageService, private router: Router) {}

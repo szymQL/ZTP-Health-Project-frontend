@@ -11,9 +11,9 @@ import {RegistrationService} from "../services/registration.service";
 })
 export class RegisterComponent {
   registerForm = this.fb.group({
-    email: ['aleczek@gmail.com', [Validators.required, Validators.email]],
-    password: ['okonokon', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
-    firstName: ['Alek', Validators.required]
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
+    firstName: ['', Validators.required]
   });
 
   constructor(private fb: FormBuilder, private service: RegistrationService) {}
