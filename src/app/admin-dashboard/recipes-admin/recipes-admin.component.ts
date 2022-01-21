@@ -70,7 +70,7 @@ export class RecipesAdminComponent {
         this.data = [recipe, ...this.data]
         this.dataSource = new MatTableDataSource(this.data);
         this.dataSource.paginator = this.paginator;
-        this.measurementForm.reset();
+        window.location.reload()
         alert(success);
       },
       err => alert(err.message)

@@ -1,14 +1,10 @@
-<div class="grid-container">
-  <h1 class="mat-h1">Strona Główna</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            {{card.title}}
-          </mat-card-title>
-        </mat-card-header>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div class="container">
+  <div class="home-content">
+    <h3 class="home-h3"> Zacznij zmianę już dziś!</h3>
+    <h2 class="home-h2"> Został już tylko jeden krok - dołącz do nas!</h2>
+    <div style="display: flex">
+      <button mat-raised-button color="accent" style="margin-left: 30%" (click)="goTo('/register')">Zarejestruj się</button>
+      <button mat-stroked-button color="accent" style="margin-left: 20px"(click)="goTo('/login')">Zaloguj się</button>
+    </div>
+  </div>
 </div>

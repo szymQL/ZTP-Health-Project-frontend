@@ -1,21 +1,30 @@
-.grid-container {
-  margin: 20px;
+.container {
+  height: 100%;
+  color: #fff; background-image: url("../../../assets/hero-bg.jpg");
+  background-size: cover;
 }
-
-.dashboard-card {
+.home-content {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
-}
-
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
-
-.dashboard-card-content {
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%,-50%);
   text-align: center;
+  margin-top: 50px;
+  z-index: 2;
 }
+.home-h3 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: navy;
+  letter-spacing: -0.5px;
+}
+.home-h2 {
+  color: white;
+  margin-bottom: 30px;
+  font-size: 43px;
+  width: 96%;
+  line-height: normal;
+  letter-spacing: -0.5px;
+  font-weight: 700;
+}
+

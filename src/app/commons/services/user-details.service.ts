@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {LocalStorageService} from "../../navigation/services/local-storage.service";
 import {environment} from "../../../environments/environment";
 import {UserWeights} from "../utils/user-weights";
-import {Message} from "../utils/response";
 
 @Injectable()
 export class UserDetailsService {

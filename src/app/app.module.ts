@@ -44,6 +44,14 @@ import {UsersAdminService} from "./commons/services/users-admin.service";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AuthService} from "./commons/services/auth.service";
 import {AuthGuardService} from "./commons/guards/auth-guard.service";
+import { SupplementsComponent } from './dashboard/supplements/supplements.component';
+import {SupplementsService} from "./commons/services/suplements.service";
+import { NotificationsComponent } from './dashboard/notifications/notifications.component';
+import {MatBadgeModule} from "@angular/material/badge";
+import {NotificationService} from "./commons/services/notification.service";
+import {MatSortModule} from "@angular/material/sort";
+import { SupplementsAdminComponent } from './admin-dashboard/supplements-admin/supplements-admin.component';
+import { NotificationsAdminComponent } from './admin-dashboard/notifications-admin/notifications-admin.component';
 
 // @ts-ignore
 // @ts-ignore
@@ -62,7 +70,11 @@ import {AuthGuardService} from "./commons/guards/auth-guard.service";
     AdminDashboardComponent,
     UsersAdminComponent,
     RecipesAdminComponent,
-    ExercisesAdminComponent
+    ExercisesAdminComponent,
+    SupplementsComponent,
+    NotificationsComponent,
+    SupplementsAdminComponent,
+    NotificationsAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -85,9 +97,11 @@ import {AuthGuardService} from "./commons/guards/auth-guard.service";
     MatTableModule,
     MatDatepickerModule,
     MatPaginatorModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatBadgeModule,
+    MatSortModule
   ],
-  providers: [RegistrationService, LoginService, ExercisesService, RecipesService, UserDetailsService, UsersAdminService, LocalStorageService, AppRoutingModule, AuthService, AuthGuardService],
+  providers: [RegistrationService, LoginService, ExercisesService, RecipesService, UserDetailsService, UsersAdminService, SupplementsService, NotificationService, LocalStorageService, AppRoutingModule, AuthService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 // @ts-ignore

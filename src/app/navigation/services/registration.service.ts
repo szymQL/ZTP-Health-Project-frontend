@@ -1,7 +1,5 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
 import {environment} from "../../../environments/environment";
 import {SignUpRequest} from "../../commons/utils/requests";
 import {Router} from "@angular/router";
@@ -19,13 +17,13 @@ export class RegistrationService {
   public registerUser(signUpRequest: SignUpRequest) {
     let url = `${this.serverUrl}/auth/signup`
     let body = JSON.stringify(signUpRequest)
-    let result = this.httpClient.post(url, body, {observe: 'response', headers: this.headers, responseType: 'json'})
+    let result = this.httpClient.post(url, body, {observe: 'body', headers: this.headers, responseType: 'json'})
     result.subscribe(
-      response => {
-        console.log(JSON.stringify(response.body))
+      _ => {
+        alert('Rejestracja powiodła się')
         this.router.navigate(['/login'])
       },
-      err => alert(err.message)
+      _ => alert('Rejestracja nie powiodła się')
     )
   }
 }

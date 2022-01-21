@@ -8,6 +8,8 @@
       <a mat-list-item href="/dashboard/wall">Twoja Tablica</a>
       <a mat-list-item href="/dashboard/exercises">Ćwiczenia</a>
       <a mat-list-item href="/dashboard/recipes">Przepisy</a>
+      <a mat-list-item href="/dashboard/supplements">Suplementy diety</a>
+      <a mat-list-item href="/dashboard/notifications"><span matBadge="{{notificationsCount}}" matBadgeOverlap="false">Powiadomienia</span></a>
       <a mat-list-item (click)="service.logoutUser()">Wyloguj się</a>
     </mat-nav-list>
   </mat-sidenav>

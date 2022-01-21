@@ -19,20 +19,7 @@ export class LoginService {
   public loginUser(signInRequest: SignInRequest) {
     let url = `${this.serverUrl}/auth/signin`;
     let body = JSON.stringify(signInRequest);
-    let result = this.httpClient.post<SignInResponse>(url, body, {observe: 'body', headers: this.headers, responseType: 'json'});
-    result.subscribe(
-      response => {
-        this.lservice.set('token', (response.accessToken));
-        this.lservice.set('id', (response.id).toString());
-        this.lservice.set('role', (response.roles[0]));
-        if(response.roles[0] == 'ADMIN') {
-          this.router.navigate(['/admin']);
-        } else {
-          this.router.navigate(['/dashboard']);
-        }
-      },
-      err => alert(err.message)
-    )
+    return this.httpClient.post<SignInResponse>(url, body, {observe: 'body', headers: this.headers, responseType: 'json'});
   }
 
   public logoutUser() {

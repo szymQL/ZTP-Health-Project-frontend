@@ -8,6 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { ExercisesComponent } from './exercises.component';
+import {ExercisesService} from "../../commons/services/exercises.service";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {LocalStorageService} from "../../navigation/services/local-storage.service";
 
 describe('ExercisesComponent', () => {
   let component: ExercisesComponent;
@@ -24,7 +27,9 @@ describe('ExercisesComponent', () => {
         MatGridListModule,
         MatIconModule,
         MatMenuModule,
-      ]
+        HttpClientModule
+      ],
+      providers: [ExercisesService, LocalStorageService]
     }).compileComponents();
   }));
 
